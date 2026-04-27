@@ -263,9 +263,8 @@ mod tests {
     fn test_energy_budget_debt() {
         let mut b = EnergyBudget::new(100.0, 0.0);
         b.current_atp = -45.0; // approaching debt_limit=-50
-        assert!(b.consume(10.0)); // -55 < -50 should fail... wait, debt_limit is -50
-        // Actually -45 - 10 = -55 < -50 = debt_limit, so consume returns false
-        // But we already consumed... let me re-check
+        assert!(!b.consume(10.0)); // -45 - 10 = -55 < -50, blocked by debt limit
+        assert_eq!(b.current_atp, -45.0); // no change since consume was rejected
     }
 
     #[test]
