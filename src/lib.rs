@@ -209,7 +209,7 @@ impl FleetEnergy {
 
     pub fn tick(&mut self, hour: f64) {
         // Generate energy for each agent (modulated by circadian rhythm)
-        for (id, budget) in &mut self.agents {
+        for (_id, budget) in &mut self.agents {
             let rest_mod = self.circadian.rest_strength(hour);
             budget.generation_rate = budget.generation_rate.max(0.0) * (0.5 + rest_mod * 0.5);
             budget.generate();
